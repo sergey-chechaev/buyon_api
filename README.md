@@ -42,7 +42,7 @@ Make request
   # => #<OpenStruct success=true>
   subscribe.to_h
   # => {:success=>true}
-
+```
 
 ## License
 
