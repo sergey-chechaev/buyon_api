@@ -1,9 +1,6 @@
 # BuyonApi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/buyon_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
+Ruby gem for Buyon API (http://docs.buyon.ru/api).
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,8 +19,31 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Configure gem credentials 
 
+```ruby
+ BuyonApi.configure do |config|
+    config.login = ENV['BUYON_LOGIN']
+    config.password = ENV['BUYON_PASSWORD']
+ end
+```
+
+Make request
+
+```ruby
+  conn = BuyonApi::Client.new
+  result = conn.login(password: "password", login: "test@mail.ru")
+  # => #<OpenStruct token="2bc053b4ce789df89casdasdeq2dqwd">
+  result.toke
+  # => "2bc053b4ce789df89casdasdeq2dqwd"
+  result[:token]
+  # => "2bc053b4ce789df89casdasdeq2dqwd"
+  subscribe = conn.subscribe(token: result.token, email: "test@buyon.ru")
+  # => #<OpenStruct success=true>
+  subscribe.to_h
+  # => {:success=>true}
+  
+  
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
